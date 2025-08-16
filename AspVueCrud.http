@@ -1,0 +1,6 @@
+@AspVueCrud_HostAddress = http://localhost:5053
+
+GET {{AspVueCrud_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
