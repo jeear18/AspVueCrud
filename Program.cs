@@ -1,55 +1,65 @@
+using AspVueCrud.Data;
+using Microsoft.EntityFrameworkCore;
 
-
-using AspVueCrud.Data;            // <-- for AppDbContext
-using Microsoft.EntityFrameworkCore; // <-- for UseSqlite
 var builder = WebApplication.CreateBuilder(args);
 
-// Add DbContext (SQLite)
+// Use SQL Server instead of SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add Controllers
 builder.Services.AddControllers();
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 👇 Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowVueApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173") // Vue dev server
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+
+
+// ✅ Check SQL Server connection
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    try
+    {
+        if (db.Database.CanConnect())
+        {
+            // Ensure database is created and seeded
+            Console.WriteLine("✅ Connected to SQL Server!");
+            DbInitializer.Seed(db);// 👈 Seed sample data
+        }
+        else
+            Console.WriteLine("❌ Cannot connect to SQL Server.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("⚠️ DB error: " + ex.Message);
+    }
+
+
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+// 👇 Enable CORS BEFORE MapControllers
+app.UseCors("AllowVueApp");
+app.MapControllers(); // 👈 This maps [ApiController] routes
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

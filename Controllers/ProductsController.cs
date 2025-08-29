@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspVueCrud.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/product")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -16,14 +16,14 @@ namespace AspVueCrud.Controllers
             _context = context;
         }
 
-        // GET: api/products
+        // GET: api/product
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public IActionResult GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return Ok(_context.Products.ToList());
         }
 
-        // GET: api/products/5
+        // GET: api/product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -35,7 +35,7 @@ namespace AspVueCrud.Controllers
             return product;
         }
 
-        // POST: api/products
+        // POST: api/product
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -45,7 +45,7 @@ namespace AspVueCrud.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
-        // PUT: api/products/5
+        // PUT: api/product/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
@@ -69,7 +69,7 @@ namespace AspVueCrud.Controllers
             return NoContent();
         }
 
-        // DELETE: api/products/5
+        // DELETE: api/product/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
