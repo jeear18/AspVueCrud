@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspVueCrud.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250821113100_InitialCreate")]
+    [Migration("20250904040147_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

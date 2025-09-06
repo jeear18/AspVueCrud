@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Anonymous\\AspVueCrud\\AspVueCrud.csproj": {}
+    "C:\\Users\\ANONYMOUS\\Desktop\\AspVueCrud\\AspVueCrud.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Anonymous\\AspVueCrud\\AspVueCrud.csproj": {
+    "C:\\Users\\ANONYMOUS\\Desktop\\AspVueCrud\\AspVueCrud.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anonymous\\AspVueCrud\\AspVueCrud.csproj",
+        "projectUniqueName": "C:\\Users\\ANONYMOUS\\Desktop\\AspVueCrud\\AspVueCrud.csproj",
         "projectName": "AspVueCrud",
-        "projectPath": "C:\\Users\\Anonymous\\AspVueCrud\\AspVueCrud.csproj",
-        "packagesPath": "C:\\Users\\Anonymous\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anonymous\\AspVueCrud\\obj\\",
+        "projectPath": "C:\\Users\\ANONYMOUS\\Desktop\\AspVueCrud\\AspVueCrud.csproj",
+        "packagesPath": "C:\\Users\\ANONYMOUS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ANONYMOUS\\Desktop\\AspVueCrud\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Anonymous\\AspVueCrud\\NuGet.Config",
-          "C:\\Users\\Anonymous\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ANONYMOUS\\Desktop\\AspVueCrud\\NuGet.Config",
+          "C:\\Users\\ANONYMOUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -51,6 +51,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.2, )"
@@ -78,6 +82,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.8, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.14.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

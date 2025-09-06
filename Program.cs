@@ -1,7 +1,39 @@
 using AspVueCrud.Data;
 using Microsoft.EntityFrameworkCore;
+//===========================
+//   FOR JWT AUTHENTICATION  
+// ==========================
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Secret key (normally store in appsettings.json)
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "SuperSecretKey123!";
+
+// Add Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
+
 
 // Use SQL Server instead of SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -58,6 +90,8 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
 // 👇 Enable CORS BEFORE MapControllers
 app.UseCors("AllowVueApp");

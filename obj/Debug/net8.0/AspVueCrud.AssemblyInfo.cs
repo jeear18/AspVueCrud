@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspVueCrud")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8559b5bce42165b40b55f85d4e208a59d72da2f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a9635cb7491628756ff419bc346f4d278e7c97f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspVueCrud")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspVueCrud")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

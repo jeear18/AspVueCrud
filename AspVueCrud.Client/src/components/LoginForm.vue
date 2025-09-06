@@ -30,50 +30,63 @@
         <button
           type="submit"
           class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg transition"
+          :disabled="loading"
         >
-          Sign In
+          {{ loading ? "Signing in..." : "Sign In" }}
         </button>
       </form>
+
       <p class="mt-6 text-center text-gray-600 text-sm">
-        Don't have an account?
-        <button
-          @click="$emit('switchToRegister')"
-          class="text-blue-700 hover:underline ml-1"
-        >
-          Sign up
-        </button>
-      </p>
+  Don't have an account?
+  <router-link to="/register" class="text-blue-700 hover:underline ml-1">
+    Sign up
+  </router-link>
+</p>
+
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
+import api from '../axios'
+import { useRouter } from 'vue-router'  // ✅ import
 
 const email = ref('')
 const password = ref('')
+const loading = ref(false)
+
+const router = useRouter()   // ✅ define router
 
 async function onLogin() {
+  loading.value = true
   try {
-    const response = await axios.post('https://localhost:5001/api/Users/login', {
-      email: email.value,
-      password: password.value
+    const response = await api.post('/user/login', {
+      Email: email.value,
+      Password: password.value
     })
 
-    alert(response.data.message) // ✅ success
+    alert(response.data.message) // ✅ "Login successful"
     console.log("User:", response.data.user)
 
-    // you can store user/token in localStorage and redirect
-    // localStorage.setItem("user", JSON.stringify(response.data.user))
-    // router.push("/home")
+    // 🔑 Save token & user for later use
+    localStorage.setItem("user", JSON.stringify(response.data.user))
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token)
+    }
+
+    // 👉 Redirect to homepage
+    router.push("/homepage")  // ✅ works now
 
   } catch (error) {
     if (error.response) {
-      alert(error.response.data.message) // ❌ invalid credentials
+      alert(error.response.data.message || "Invalid credentials")
     } else {
       alert("Server error")
     }
+  } finally {
+    loading.value = false
   }
 }
 </script>
+
