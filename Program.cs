@@ -37,7 +37,16 @@ builder.Services.AddAuthentication(options =>
 
 // Use SQL Server instead of SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+      // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); FOR SQL SERVER
+      
+      //============================
+      // Use MySQL / MariaDB
+      // ===========================
+      options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(10, 4, 32)) // adjust version to match your MariaDB/MySQL
+    )
+);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -61,6 +70,28 @@ var app = builder.Build();
 
 
 // ✅ Check SQL Server connection
+// using (var scope = app.Services.CreateScope())
+// {
+//     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//     try
+//     {
+//         if (db.Database.CanConnect())
+//         {
+//             // Ensure database is created and seeded
+//             Console.WriteLine("✅ Connected to SQL Server!");
+//             DbInitializer.Seed(db);// 👈 Seed sample data
+//         }
+//         else
+//             Console.WriteLine("❌ Cannot connect to SQL Server.");
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine("⚠️ DB error: " + ex.Message);
+//     }
+
+
+// }
+// ✅ Check MySQL connection
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -68,19 +99,18 @@ using (var scope = app.Services.CreateScope())
     {
         if (db.Database.CanConnect())
         {
-            // Ensure database is created and seeded
-            Console.WriteLine("✅ Connected to SQL Server!");
-            DbInitializer.Seed(db);// 👈 Seed sample data
+            Console.WriteLine("✅ Connected to MySQL/MariaDB!");
+            DbInitializer.Seed(db); // 👈 Seed sample data
         }
         else
-            Console.WriteLine("❌ Cannot connect to SQL Server.");
+        {
+            Console.WriteLine("❌ Cannot connect to MySQL/MariaDB.");
+        }
     }
     catch (Exception ex)
     {
         Console.WriteLine("⚠️ DB error: " + ex.Message);
     }
-
-
 }
 
 if (app.Environment.IsDevelopment())

@@ -1,1 +1,11 @@
-{"Version":1,"Hash":"k6kglMsm6x7tWy46Dm38X7kviSV6Sigs8SJXCUUgW+s=","Source":"AspVueCrud","BasePath":"_content/AspVueCrud","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "Ya4U5Ab1pEAPQOtfRkT8+QOiao5Y3QU8Uqc6I9P/jHs=",
+  "Source": "AspVueCrud",
+  "BasePath": "_content/AspVueCrud",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
