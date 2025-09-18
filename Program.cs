@@ -44,7 +44,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
       // ===========================
       options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(10, 4, 32)) // adjust version to match your MariaDB/MySQL
+        // new MySqlServerVersion(new Version(10, 4, 32)) // adjust version to match your MariaDB/MySQL
+         new MySqlServerVersion(new Version(8, 4, 3)) // ✅ exact version for MySQL 8.4.3
     )
 );
 
